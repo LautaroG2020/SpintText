@@ -1,0 +1,20 @@
+﻿body {
+    background-color: #212121;
+    background-size: cover;
+}
+
+.container .card {
+    background: #424242;
+}
+
+p {
+    color: white;
+}
+
+li {
+    color: white;
+}
+
+h2 {
+    color: #507DBC;
+}
