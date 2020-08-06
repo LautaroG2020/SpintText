@@ -75,7 +75,7 @@ Public Class Cls_Titulo
     End Function
 
 
-    Public Function Insert(ByVal dts As Cls_Titulo) As Boolean
+    Public Function Insert(ByVal dts As Cls_Titulo) As Integer
         Try
             Conectado()
             cmd = New SqlCommand("insert into Titulo(Nombre, Descripcion)" & "values(@Nombre, @Descripcion)")
@@ -86,13 +86,38 @@ Public Class Cls_Titulo
             cmd.Parameters.AddWithValue("@Nombre", dts.Nombre)
             cmd.Parameters.AddWithValue("@Descripcion", dts.Descripcion)
 
-            If cmd.ExecuteNonQuery Then
-                Return True
+            If cmd.ExecuteNonQuery() > 0 Then
+                Dim r As SqlCommand
+                r = New SqlCommand("Select @@IDENTITY", conn)
+                Return r.ExecuteScalar()
             Else
                 Return False
             End If
         Catch ex As Exception
             RaiseEvent msgErrorTitulo("Error: " & ex.Message)
+            Return False
+        Finally
+            Desconectado()
+        End Try
+    End Function
+
+    Public Function BuscarTitulo(ByVal textoOriginal As String) As Integer
+        Try
+            Conectado()
+            cmd = New SqlCommand("select IDTitulo from Titulo where Nombre LIKE " + textoOriginal + "")
+            cmd.CommandType = CommandType.Text
+            cmd.Connection = conn
+
+            If cmd.ExecuteNonQuery Then
+                Dim r As SqlCommand
+                r = New SqlCommand("Select @@IDENTITY", conn)
+                Return r.ExecuteScalar()
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            RaiseEvent msgErrorTitulo("Error : " + ex.Message)
             Return False
         Finally
             Desconectado()

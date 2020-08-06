@@ -53,10 +53,10 @@ Public Class Sinonimos
     End Sub
 #End Region
 
-    Public Function LoadGrid() As DataTable
+    Public Function LoadGrid(ByVal id As Integer) As DataTable
         Try
             Conectado()
-            Dim cmd = New SqlCommand("select * from Sinonimo")
+            Dim cmd = New SqlCommand("select * from Sinonimo where IDTitulo = " + id + "")
             cmd.CommandType = CommandType.Text
             cmd.Connection = conn
 
@@ -80,7 +80,7 @@ Public Class Sinonimos
     Public Function Insert(ByVal dts As Sinonimos)
         Try
             Conectado()
-            Dim cmd = New SqlCommand("inser into Sinonimo" & "values(@Sinonimo, @IDTitulo)")
+            Dim cmd = New SqlCommand("insert into Sinonimo(Sinonimo, IDTitulo)" & "values(@Sinonimo, @IDTitulo)")
             cmd.CommandType = CommandType.Text
             cmd.Connection = conn
 
@@ -89,7 +89,7 @@ Public Class Sinonimos
             cmd.Parameters.AddWithValue("@Sinonimo", dts.Sinonimo)
             cmd.Parameters.AddWithValue("@IDTitulo", dts.IDTitulo)
 
-            If cmd.ExecuteNonQuery Then
+            If cmd.ExecuteNonQuery() > 0 Then
                 Return True
             Else
                 Return False
