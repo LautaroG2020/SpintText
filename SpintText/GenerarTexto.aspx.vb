@@ -10,19 +10,47 @@
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim funcT As New Cls_Titulo
         Dim funcS As New Sinonimos
-        Dim dtT As Integer
+        Dim dtTitulos As DataTable
         Dim dtS As New DataTable
         Dim texto As String = txtOriginal.Text
-
-        dtT = funcT.BuscarTitulo(texto)
-        dtS = funcS.LoadGrid(dtT)
-
-        Dim texto1 As String = "saludo"
         Dim resultado As String
 
-        resultado = Replace(texto, "{" + texto1 + "}", "Hola")
+        Dim palabras As List(Of String)
+
+        'Se extrae una lista con todos los titulos que hay en el texto
+        palabras = GetTitulosFromText(texto)
+
+        'Traigo una tabla con todos los datos de cada titulo encontrado
+        dtTitulos = funcT.GetTitulos(palabras)
+
+
+        resultado = texto
+        'Recorro los titulos y busco sus sinonimos
+        For Each row As DataRow In dtTitulos.Rows
+            dtS = funcS.LoadGrid(row("id"))
+
+            'Una vez tengo la tabla de los sinonimos de un titulo, lo reemplazo en el texto
+            'En este caso yo lo reemplazo por la primer row, pero deberia ser aleatorio, INVESTIGAR.
+            resultado = resultado.Replace("{" + row("Titulo") + "}", dtS.Rows(0)("Sinonimo"))
+
+        Next
+
+        'Dim texto1 As String = "saludo"
+        'resultado = Replace(texto, "{" + texto1 + "}", "Hola")
 
 
         ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertIns", "alert('" + resultado + "');", True)
     End Sub
+
+    Private Function GetTitulosFromText(ByVal text As String) As List(Of String)
+        Dim re As New Regex("\{([^{}]+)\}*") 'Expresion regular que trae un listado de palabras o frases entre llaves
+        GetTitulosFromText = Nothing
+
+        'Recorro todas las coincidencias encontradas y las agrego a una lista
+        For Each m As Match In re.Matches(text)
+            GetTitulosFromText.Add(m.Value)
+        Next
+
+        Return GetTitulosFromText.Distinct() 'Distinct quita los repetidos de la lista.
+    End Function
 End Class

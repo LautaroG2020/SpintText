@@ -124,4 +124,32 @@ Public Class Cls_Titulo
         End Try
     End Function
 
+    Public Function GetTitulos(ByVal Titulos As List(Of String)) As DataTable
+        Try
+            Conectado()
+            Dim conditions As String = ""
+            For Each t As String In Titulos
+                conditions = conditions + "Nombre = '" & t & "' OR "
+            Next
+            conditions = conditions.Trim().Remove(conditions.Length - 2, 2) 'quito el ultimo OR
+
+            cmd = New SqlCommand("SELECT * FROM Titulo WHERE " & conditions)
+            cmd.CommandType = CommandType.Text
+            cmd.Connection = conn
+
+            If cmd.ExecuteNonQuery Then
+                Dim dt As New DataTable
+                Dim da As New SqlDataAdapter(cmd)
+                da.Fill(dt)
+                Return dt
+            Else
+                Return Nothing
+            End If
+        Catch ex As Exception
+            RaiseEvent msgErrorTitulo(ex.Message)
+            Return Nothing
+        Finally
+            Desconectado()
+        End Try
+    End Function
 End Class
