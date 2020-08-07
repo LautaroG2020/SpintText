@@ -131,7 +131,7 @@ Public Class Cls_Titulo
             For Each t As String In Titulos
                 conditions = conditions + "Nombre = '" & t & "' OR "
             Next
-            conditions = conditions.Trim().Remove(conditions.Length - 2, 2) 'quito el ultimo OR
+            conditions = conditions.Trim().Remove(conditions.Length - 3, 2) 'quito el ultimo OR
 
             cmd = New SqlCommand("SELECT * FROM Titulo WHERE " & conditions)
             cmd.CommandType = CommandType.Text

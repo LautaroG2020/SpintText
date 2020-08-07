@@ -48,7 +48,7 @@
 
         'Recorro todas las coincidencias encontradas y las agrego a una lista
         For Each m As Match In re.Matches(text)
-            GetTitulosFromText.Add(m.Value)
+            GetTitulosFromText.Add(m.Value.Replace("{", "").Replace("}", ""))
         Next
 
         Return GetTitulosFromText.Distinct().ToList() 'Distinct quita los repetidos de la lista.
