@@ -27,11 +27,11 @@
         resultado = texto
         'Recorro los titulos y busco sus sinonimos
         For Each row As DataRow In dtTitulos.Rows
-            dtS = funcS.LoadGrid(row("id"))
+            dtS = funcS.LoadGrid(row("IDTitulo"))
 
             'Una vez tengo la tabla de los sinonimos de un titulo, lo reemplazo en el texto
             'En este caso yo lo reemplazo por la primer row, pero deberia ser aleatorio, INVESTIGAR.
-            resultado = resultado.Replace("{" + row("Titulo") + "}", dtS.Rows(0)("Sinonimo"))
+            resultado = resultado.Replace("{" + row("Nombre") + "}", dtS.Rows(0)("Sinonimo"))
 
         Next
 
@@ -44,13 +44,13 @@
 
     Private Function GetTitulosFromText(ByVal text As String) As List(Of String)
         Dim re As New Regex("\{([^{}]+)\}*") 'Expresion regular que trae un listado de palabras o frases entre llaves
-        GetTitulosFromText = Nothing
+        GetTitulosFromText = New List(Of String)
 
         'Recorro todas las coincidencias encontradas y las agrego a una lista
         For Each m As Match In re.Matches(text)
             GetTitulosFromText.Add(m.Value)
         Next
 
-        Return GetTitulosFromText.Distinct() 'Distinct quita los repetidos de la lista.
+        Return GetTitulosFromText.Distinct().ToList() 'Distinct quita los repetidos de la lista.
     End Function
 End Class
