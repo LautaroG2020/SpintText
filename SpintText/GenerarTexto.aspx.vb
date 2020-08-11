@@ -35,11 +35,7 @@
 
         Next
 
-        'Dim texto1 As String = "saludo"
-        'resultado = Replace(texto, "{" + texto1 + "}", "Hola")
-
-
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertIns", "alert('" + resultado + "');", True)
+        txtTextoNuevo.Text = resultado
     End Sub
 
     Private Function GetTitulosFromText(ByVal text As String) As List(Of String)

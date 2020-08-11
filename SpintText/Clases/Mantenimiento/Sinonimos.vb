@@ -56,7 +56,7 @@ Public Class Sinonimos
     Public Function LoadGrid(ByVal id As Integer) As DataTable
         Try
             Conectado()
-            Dim cmd = New SqlCommand("select * from Sinonimo where IDTitulo = " + id + "")
+            Dim cmd = New SqlCommand("select * from Sinonimo where IDTitulo = " & id & "")
             cmd.CommandType = CommandType.Text
             cmd.Connection = conn
 

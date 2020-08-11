@@ -23,6 +23,15 @@ Partial Public Class GenerarTexto
     Protected WithEvents txtOriginal As Global.System.Web.UI.WebControls.TextBox
     
     '''<summary>
+    '''Control txtTextoNuevo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtTextoNuevo As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
     '''Control Button1.
     '''</summary>
     '''<remarks>

@@ -31,6 +31,7 @@
                         <asp:Label Text="Textos creados" runat="server" ForeColor="#E15119" />
                     </div>
                     <br />
+                     <asp:TextBox ID="txtTextoNuevo" CssClass="form-control" runat="server" TextMode="MultiLine" Width=""></asp:TextBox>
                 </div>
             </div>
         </div>
