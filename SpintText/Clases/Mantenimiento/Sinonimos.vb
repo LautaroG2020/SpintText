@@ -77,7 +77,7 @@ Public Class Sinonimos
 
     End Function
 
-    Public Function Insert(ByVal dts As Sinonimos)
+    Public Function Insert()
         Try
             Conectado()
             Dim cmd = New SqlCommand("insert into Sinonimo(Sinonimo, IDTitulo)" & "values(@Sinonimo, @IDTitulo)")
@@ -86,8 +86,8 @@ Public Class Sinonimos
 
 
             'Enviamos todos a los parametros que se reciben
-            cmd.Parameters.AddWithValue("@Sinonimo", dts.Sinonimo)
-            cmd.Parameters.AddWithValue("@IDTitulo", dts.IDTitulo)
+            cmd.Parameters.AddWithValue("@Sinonimo", Me.Sinonimo)
+            cmd.Parameters.AddWithValue("@IDTitulo", Me.IDTitulo)
 
             If cmd.ExecuteNonQuery() > 0 Then
                 Return True

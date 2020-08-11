@@ -7,16 +7,22 @@
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
-
-            Dim dts As New Cls_Titulo
             Dim sin As New Sinonimos
+            Dim Listasinonimos As String()
+            Dim dts As New Cls_Titulo
             Dim i As Integer
             dts.Nombre = txtTitulo.Text
             dts.Descripcion = txtDescripcion.Text
             i = dts.Insert(dts)
-            sin.Sinonimo = txtSinonimos.Text
-            sin.IDTitulo = i
-            sin.Insert(sin)
+
+            Listasinonimos = Split(txtSinonimos.Text, ";")
+
+            For Each S As String In Listasinonimos
+                sin = New Sinonimos
+                sin.Sinonimo = S
+                sin.IDTitulo = i
+                sin.Insert()
+            Next
 
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertIns", "alert('El registro se guardó correctamente');", True)
 
