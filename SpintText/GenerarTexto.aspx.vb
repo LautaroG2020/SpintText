@@ -29,9 +29,13 @@
         For Each row As DataRow In dtTitulos.Rows
             dtS = funcS.LoadGrid(row("IDTitulo"))
 
+            Dim nroRows As Integer = dtS.Rows.Count
+            Dim random As New Random
+            Dim returnRow As Integer = random.Next(nroRows)
+
             'Una vez tengo la tabla de los sinonimos de un titulo, lo reemplazo en el texto
             'En este caso yo lo reemplazo por la primer row, pero deberia ser aleatorio, INVESTIGAR.
-            resultado = resultado.Replace("{" + row("Nombre") + "}", dtS.Rows(0)("Sinonimo"))
+            resultado = resultado.Replace("{" + row("Nombre") + "}", dtS.Rows(returnRow)("Sinonimo"))
 
         Next
 
@@ -49,4 +53,5 @@
 
         Return GetTitulosFromText.Distinct().ToList() 'Distinct quita los repetidos de la lista.
     End Function
+
 End Class
